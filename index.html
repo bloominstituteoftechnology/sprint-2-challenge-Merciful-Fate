@@ -190,7 +190,32 @@
     }
 
     // 👉 CHALLENGE 5
-    function normalizePhoneNumber() {
+    function normalizePhoneNumber(phoneNumber) {
+      let numCheck = Number(phoneNumber)
+      let result
+      let iteration=1
+      let int = 9
+      let template = "(XXX) XXX-XXXX"
+      let templateArray = template.split('')
+      let phoneNumberArray = phoneNumber.split('')
+      let resultArray = []
+      if (phoneNumber.length !== 10) {
+      return "type a 10-digit number"
+      } else if (!numCheck) {
+        return "invalid phone number"
+      } else {
+        for (let index = templateArray.length ; index >= 0 ; index--) {
+          if (templateArray[index] === "X") {                        
+            let removed = phoneNumberArray.pop()
+            resultArray.unshift(removed)
+            int = int - 1
+          } else {
+            resultArray.unshift(templateArray[index])
+          }         
+        }
+        result = resultArray.join('')
+        return result
+      }
       // 🧠 normalizePhoneNumber takes a string as its only argument, representing a ten-digit number
       // The function returns a string formatted as seen below
       // 🧠 Examples of usage:
@@ -208,7 +233,22 @@
     function diceRolls() {
       let totalThrows = 0
       let sixesInARow = 0
-      Roll = Math.floor(Math.random() * 6)
+      Roll = Math.floor((Math.random() * 6)+1)
+      let diceresult = 0
+      while (true) {
+        Roll = Math.floor((Math.random() * 6)+1)
+        if (Roll === 6) {
+          sixesInARow++
+          totalThrows++
+        } else if (Roll !== 3) {
+          sixesInARow = 0
+          totalThrows++
+        } 
+        if (sixesInARow === 3) {
+          break
+        }
+      }
+      return totalThrows
 
 
       // 🧠 diceRolls takes no arguments and returns a number
