@@ -73,7 +73,22 @@
     // ❗ Debug properly using the Console
 
     // 👉 CHALLENGE 1
-    function profileActivation() {
+    function profileActivation(object, reason) {
+      if (object.active === false && object.reason === undefined) {
+        return "confirm status manually"
+      } else if (object.active === true && typeof object.reason === "string") {
+        return "confirm status manually"
+      } else if (object.active === undefined) {
+        return "impossible to ascertain status"
+      } else if (object.active === true) {
+        object.active = false
+        object.reason = reason
+        return object
+      } else if (object.active === false) {
+        object.active = true
+        delete object.reason
+        return object
+      }
       // 🧠 profileActivation takes two arguments, profile and reason, which are an object and a string respectively
       //  The reason arg is only used -and therefore required- to deactivate profiles, not to activate them
       //  The profile arg has an `active` property holding a Boolean value
@@ -88,7 +103,14 @@
     }
 
     // 👉 CHALLENGE 2
-    function mineSweeper() {
+    function mineSweeper(grid,numberx,numbery) {
+      if (numberx < 1 || numberx >3 || numbery < 1 || numbery > 3) {
+        return "invalid coordinates"
+      } else if (grid[(numbery-1)][(numberx-1)] === "🟦") {
+        return "🟦 🥳"
+      } else if (grid[(numbery-1)][(numberx-1)] === "🟥") {
+        return "🟥 💀"
+      }
       // 🧠 mineSweeper takes a grid as its first argument, and coordinates x and y as the second and third args
       //  The grid is an array of arrays in the following format: [["🟥","🟦","🟥"],["🟦","🟥","🟥"],["🟥","🟦","🟦"]]
       //  Each subarray is a row of the grid, the first subarray being the top row:
@@ -109,7 +131,22 @@
     }
 
     // 👉 CHALLENGE 3
-    function booleanize() {
+    function booleanize(object) {
+      for (i in object) {
+        if (i.length > 9) {
+          return "shorten all prop names to 9 chars or less"
+        } 
+        if (object[i] ===  0) {
+          object[i] = false
+        } 
+        if (object[i] === 1) {
+          object[i] = true
+        }
+        if (object[i] === null) {
+          delete object[i]
+        }
+      }
+      return object
       // 🧠 booleanize takes an object as its single argument, which can have any number of properties
       // Loop over the properties and then return the object, after applying the following transformations:
       //    * If a value is the number zero, it must be transformed into the Boolean false
@@ -121,7 +158,24 @@
     }
 
     // 👉 CHALLENGE 4
-    function scrub() {
+    function scrub(stringA,forbidden) {
+      wordsArr = stringA.split(' ')
+      let newWord
+      let newString
+      for (let i=0 ; i < wordsArr.length; i++) {
+        if (wordsArr[i] === forbidden[forbidden.indexOf(wordsArr[i])]) {
+          charArr = wordsArr[i].split('')
+          newCharArr=[]
+          for (let index=0 ; index < charArr.length ; index++) {
+            newCharArr.push('x')
+          }
+          newWord=newCharArr.join('')
+          wordsArr[i] = newWord
+        }
+      }
+      newString=wordsArr.join(' ')
+      return newString
+
       // 🧠 scrub takes a string "text" as its first argument, and an array of forbidden words "forbidden" as its second
       // Any word in the text included in the array of forbidden words is replaced with a word of equal length but made of lowcase "x"
       // The scrubbed text is then returned from the function, as seen in the examples below
@@ -152,6 +206,11 @@
 
     // 👉 CHALLENGE 6 (bonus, NOT graded)
     function diceRolls() {
+      let totalThrows = 0
+      let sixesInARow = 0
+      Roll = Math.floor(Math.random() * 6)
+
+
       // 🧠 diceRolls takes no arguments and returns a number
       // The function throws a six-sided dice until 3 sixes in a row are obtained
       // The number of throws it took to obtain that third-in-a-row six is then returned from the function
